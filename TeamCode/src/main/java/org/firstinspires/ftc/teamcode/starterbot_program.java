@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 
 
 @TeleOp
@@ -19,12 +20,14 @@ public class starterbot_program extends OpMode{
     LEDLights light = new LEDLights();
 
     double velocity;
+    double idleVelocity;
+
 
     @Override
     public void init() {
         light.init(hardwareMap);
         driveTrain.init(hardwareMap);
-        driveTrain.setDriveSpeed(1);
+        driveTrain.setDriveSpeed(0.75);
 
         shooter = hardwareMap.get(DcMotorEx.class,"shooter");
         intake = hardwareMap.get(DcMotor.class,"intake");
@@ -32,14 +35,19 @@ public class starterbot_program extends OpMode{
         rightsideintake = hardwareMap.get(CRServo.class,"rightsideintake");
         leftIntake = hardwareMap.get(CRServo.class,"leftIntake");
 
-        velocity = 2000;
+        velocity = 1350;
+        idleVelocity = 300;
 
-        shooter.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+//        shooter.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        PIDFCoefficients pidfCoefficients = new PIDFCoefficients(55, 0, 0, 13);
+        shooter.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, pidfCoefficients);
     }
 
     @Override
     public void loop() {
         driveTrain.gamepadDrive(gamepad1);
+        shooter.setVelocity(idleVelocity);
         if(gamepad2.dpadLeftWasPressed()){
             intake.setPower(1);
             rightsideintake.setPower(1);
@@ -49,8 +57,17 @@ public class starterbot_program extends OpMode{
             rightsideintake.setPower(0);
             leftIntake.setPower(0);
         }
+        if (gamepad2.dpadDownWasPressed()) {
+            intake.setPower(-1);
+            rightsideintake.setPower(-1);
+            leftIntake.setPower(1);
+        } else if (gamepad1.dpadDownWasReleased()) {
+            intake.setPower(0);
+            rightsideintake.setPower(0);
+            leftIntake.setPower(0);
+        }
         if(gamepad2.dpad_right){
-            shooter.setVelocity(0);
+            shooter.setVelocity(idleVelocity);
         }
         if(gamepad2.x) {
             shooter.setVelocity(velocity);

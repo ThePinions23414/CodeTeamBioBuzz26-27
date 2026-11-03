@@ -1,16 +1,18 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.eventloop.opmode.Utility;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 
-@TeleOp
+@Utility
 public class FlywheelTuner extends OpMode {
     public DcMotorEx shooter;
 
-    public double highVelocity = 1350;
+    public double highVelocity = 1300;
     public double lowVelocity = 300;
 
     public double targetVelocity = highVelocity;

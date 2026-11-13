@@ -18,7 +18,7 @@ import java.util.List;
 
 
 @TeleOp
-public class starterbot_program extends OpMode{
+public class starerbot_BLUE extends OpMode{
     DriveTrain driveTrain = new DriveTrain();
     private Limelight3A limelight;
     DcMotorEx shooter;
@@ -27,6 +27,7 @@ public class starterbot_program extends OpMode{
     CRServo rightsideintake;
     CRServo leftIntake;
     Servo the_wedge;
+    Servo gate;
 
     LEDLights light = new LEDLights();
     HiveTargetingMechanism hiveTargetingMechanism = new HiveTargetingMechanism();
@@ -43,11 +44,10 @@ public class starterbot_program extends OpMode{
     @Override
     public void init() {
         limelight = hardwareMap.get(Limelight3A.class, "limelight");
-        limelight.pipelineSwitch(3);
+        limelight.pipelineSwitch(4);
         light.init(hardwareMap);
         hiveTargetingMechanism.init(hardwareMap);
         driveTrain.init(hardwareMap);
-        driveTrain.setDriveSpeed(0.75);
 
         shooter = hardwareMap.get(DcMotorEx.class,"shooter");
         intake = hardwareMap.get(DcMotor.class,"intake");
@@ -55,9 +55,11 @@ public class starterbot_program extends OpMode{
         rightsideintake = hardwareMap.get(CRServo.class,"rightsideintake");
         leftIntake = hardwareMap.get(CRServo.class,"leftIntake");
         the_wedge = hardwareMap.get(Servo.class,"the_wedge");
+        gate = hardwareMap.get(Servo.class, "gate");
 
         velocity = 1350;
         shooterActivated = false;
+        driveTrain.setDriveSpeed(0.75);
 
 
     }
@@ -65,6 +67,7 @@ public class starterbot_program extends OpMode{
     public void start() {
         limelight.start();
         hiveTargetingMechanism.resetTimer();
+        gate.setPosition(0);
 
     }
 
@@ -133,6 +136,8 @@ public class starterbot_program extends OpMode{
 
         if (gamepad1.leftBumperWasReleased() && !driveMode) {
             driveMode = true;
+            shooter.setVelocity(0);
+            gate.setPosition(0);
             if (llResult == null || !llResult.isValid()) {
                 hiveTargetingMechanism.stopRobot();
             }
@@ -182,11 +187,19 @@ public class starterbot_program extends OpMode{
         if(gamepad2.dpad_right){
             shooter.setVelocity(0);
             shooterActivated = false;
+            gate.setPosition(0);
         }
 
         if(gamepad2.bWasPressed() && !driveMode) {
             flipper.setPower(1);
+            gate.setPosition(0.25);
         } else if (gamepad2.bWasReleased()){
+            flipper.setPower(0);
+        }
+
+        if(gamepad2.dpadUpWasPressed()) {
+            flipper.setPower(-1);
+        } else if (gamepad2.dpadUpWasReleased()){
             flipper.setPower(0);
         }
 
@@ -199,10 +212,23 @@ public class starterbot_program extends OpMode{
 
         if (gamepad2.a) {
             the_wedge.setPosition(0.525);
+            driveTrain.setDriveSpeed(0.25);
         }
         if (gamepad2.y) {
             the_wedge.setPosition(0);
+            driveTrain.setDriveSpeed(0.75);
         }
+
+        if (gamepad1.a) {
+            the_wedge.setPosition(0.525);
+            driveTrain.setDriveSpeed(0.25);
+        }
+        if (gamepad1.y) {
+            the_wedge.setPosition(0);
+            driveTrain.setDriveSpeed(0.75);
+        }
+
+
 
 
         if(shooter.getVelocity() > velocity - 50 && shooter.getVelocity() < velocity + 50){
@@ -249,7 +275,8 @@ public class starterbot_program extends OpMode{
 //        telemetry.addData("Tuning D","%.5f (D-Pad U/D)", hiveTargetingMechanism.getkD());
 //        telemetry.addData("Step Size","%.5f (B Button)", stepSizes[stepIndex]);
 
-        telemetry.addData("current velocity",shooter.getVelocity());
+        telemetry.addData("Current Velocity",shooter.getVelocity());
+        telemetry.addData("Target Velocity", velocity);
 
 
     }

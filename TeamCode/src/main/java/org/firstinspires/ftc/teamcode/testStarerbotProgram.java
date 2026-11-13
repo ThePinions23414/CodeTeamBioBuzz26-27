@@ -46,7 +46,7 @@ public class testStarerbotProgram extends OpMode {
 
         light.init(hardwareMap);
         stooooop.init(hardwareMap);
-        stooooop.setDriveSpeed(1.0);
+        stooooop.setDriveSpeed(0.75);
 
         shooter = hardwareMap.get(DcMotorEx.class, "shooter");
         shooter.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -133,7 +133,8 @@ public class testStarerbotProgram extends OpMode {
         stooooop.gamepadDrive(forward, strafe, turn);
         stooooop.update();
 
-        // 3. Driver 2: Intake
+
+
         if (gamepad2.dpadLeftWasPressed()) {
             intake.setPower(1);
             rightsideintake.setPower(1);
@@ -154,7 +155,7 @@ public class testStarerbotProgram extends OpMode {
             leftIntake.setPower(0);
         }
 
-        // 4. Driver 2: Shooter Control
+
         if (gamepad2.dpad_right) {
             shooterActivated = false;
             shooter.setVelocity(0);
@@ -182,7 +183,7 @@ public class testStarerbotProgram extends OpMode {
             override = false;
         }
 
-        // Flipper & Gate Control
+
         if (gamepad2.dpad_up) {
             // Reverse flipper to clear jams
             flipper.setPower(-1);
@@ -194,14 +195,14 @@ public class testStarerbotProgram extends OpMode {
             flipper.setPower(0);
         }
 
-        // 6. Shared Wedge Controls
+
         if (gamepad1.a || gamepad2.a) {
             the_wedge.setPosition(0.525);
         } else if (gamepad1.y || gamepad2.y) {
             the_wedge.setPosition(0);
         }
 
-        // 7. LED Status Indicator
+
         if (readyToFire) {
             // Solid Green: Aimed and at target RPM (Ready to shoot)
             light.setRedLed(true);
@@ -217,7 +218,8 @@ public class testStarerbotProgram extends OpMode {
         }
 
         telemetry.addData("Mode", driveMode ? "MANUAL" : "AUTO-AIM");
-        telemetry.addData("Shooter Velocity", "%.1f / %.1f", currentVelocity, velocity);
+        telemetry.addData("Target Velocity",velocity);
+        telemetry.addData("Current Velocity", shooter.getVelocity());
         telemetry.addData("Shooter Ready", shooterReady);
         telemetry.addData("Aim Ready", aimReady);
         telemetry.addData("READY TO FIRE", readyToFire);

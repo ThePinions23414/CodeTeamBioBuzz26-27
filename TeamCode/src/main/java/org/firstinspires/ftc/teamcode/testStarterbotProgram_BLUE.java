@@ -13,8 +13,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import java.util.List;
 
-@TeleOp(name = "Test Starterbot Program", group = "Test")
-public class testStarerbotProgram extends OpMode {
+@TeleOp
+public class testStarterbotProgram_BLUE extends OpMode {
 
     testSTOOOOOP stooooop = new testSTOOOOOP();
     testHiveTargetingMechanism hiveTargetingMechanism = new testHiveTargetingMechanism();
@@ -29,9 +29,9 @@ public class testStarerbotProgram extends OpMode {
     Servo the_wedge;
     Servo gate;
 
-    double velocity = 1350;
-    double P = 55;
-    double F = 13;
+    double velocity = 1275;
+    double P = 70;
+    double F = 13.6;
     double lastP = -1;
     double lastF = -1;
 
@@ -55,7 +55,7 @@ public class testStarerbotProgram extends OpMode {
         flipper = hardwareMap.get(CRServo.class, "flipper");
         rightsideintake = hardwareMap.get(CRServo.class, "rightsideintake");
         leftIntake = hardwareMap.get(CRServo.class, "leftIntake");
-        the_wedge = hardwareMap.get(Servo.class, "the_wedge");
+        the_wedge = hardwareMap.get(Servo.class, "wedge");
         gate = hardwareMap.get(Servo.class, "gate");
 
         hiveTargetingMechanism.setkP(0.03700);
@@ -79,13 +79,13 @@ public class testStarerbotProgram extends OpMode {
             telemetry.addData("Ta", llResult.getTa());
 
             if (llResult.getTa() <= 0.85) {
-                velocity = 1350;
-                P = 55;
-                F = 13;
+                velocity = 1275;
+                P = 70;
+                F = 13.6;
             } else {
-                velocity = 1300;
-                P = 60;
-                F = 13.2;
+                velocity = 1275;
+                P = 70;
+                F = 13.6;
             }
 
             List<LLResultTypes.FiducialResult> fiducialResults = llResult.getFiducialResults();
@@ -95,9 +95,9 @@ public class testStarerbotProgram extends OpMode {
                 telemetry.addData("Tag ID", tagID);
             }
         } else {
-            velocity = 1300;
-            P = 60;
-            F = 13.2;
+            velocity = 1275;
+            P = 70;
+            F = 13.6;
         }
 
         // Only update PIDF coefficients on the Control Hub when values change
@@ -190,16 +190,18 @@ public class testStarerbotProgram extends OpMode {
         } else if ((gamepad2.b && readyToFire) || (gamepad2.b && override)) {
             // Auto-gated fire: only feeds when aim & flywheel RPM are both ready
             flipper.setPower(1);
-            gate.setPosition(0.25);
+            gate.setPosition(0.6);
         } else {
             flipper.setPower(0);
         }
 
 
         if (gamepad1.a || gamepad2.a) {
-            the_wedge.setPosition(0.525);
+            the_wedge.setPosition(0.5);
+            stooooop.setDriveSpeed(0.3);
         } else if (gamepad1.y || gamepad2.y) {
             the_wedge.setPosition(0);
+            stooooop.setDriveSpeed(0.75);
         }
 
 

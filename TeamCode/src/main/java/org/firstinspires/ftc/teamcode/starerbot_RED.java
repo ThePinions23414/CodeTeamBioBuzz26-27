@@ -16,7 +16,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 
 import java.util.List;
 
-
+@Disabled
 @TeleOp
 public class starerbot_RED extends OpMode{
     DriveTrain driveTrain = new DriveTrain();
@@ -54,10 +54,10 @@ public class starerbot_RED extends OpMode{
         flipper = hardwareMap.get(CRServo.class,"flipper");
         rightsideintake = hardwareMap.get(CRServo.class,"rightsideintake");
         leftIntake = hardwareMap.get(CRServo.class,"leftIntake");
-        the_wedge = hardwareMap.get(Servo.class,"the_wedge");
+        the_wedge = hardwareMap.get(Servo.class,"wedge");
         gate = hardwareMap.get(Servo.class, "gate");
 
-        velocity = 1350;
+        velocity = 1275;
         shooterActivated = false;
         driveTrain.setDriveSpeed(0.75);
 
@@ -67,7 +67,7 @@ public class starerbot_RED extends OpMode{
     public void start() {
         limelight.start();
         hiveTargetingMechanism.resetTimer();
-        gate.setPosition(0);
+        gate.setPosition(0.3);
 
     }
 
@@ -79,13 +79,13 @@ public class starerbot_RED extends OpMode{
         LLResult llResult = limelight.getLatestResult();
         if (llResult != null && llResult.isValid()) {
             if (llResult.getTa() < 0.85) {
-                velocity = 1350;
+                velocity = 1275;
                 P = 55;
                 F = 13;
 
             }
             else if (llResult.getTa() > 0.85) {
-                velocity = 1300;
+                velocity = 1275;
                 P = 60;
                 F = 13.2;
 
@@ -124,7 +124,7 @@ public class starerbot_RED extends OpMode{
 
             }
         } else {
-            velocity = 1300;
+            velocity = 12750;
             P = 60;
             F = 13.2;
         }
@@ -137,7 +137,7 @@ public class starerbot_RED extends OpMode{
         if (gamepad1.leftBumperWasReleased() && !driveMode) {
             driveMode = true;
             shooter.setVelocity(0);
-            gate.setPosition(0);
+            gate.setPosition(0.3);
             if (llResult == null || !llResult.isValid()) {
                 hiveTargetingMechanism.stopRobot();
             }
@@ -187,12 +187,12 @@ public class starerbot_RED extends OpMode{
         if(gamepad2.dpad_right){
             shooter.setVelocity(0);
             shooterActivated = false;
-            gate.setPosition(0);
+            gate.setPosition(0.3);
         }
 
         if(gamepad2.bWasPressed() && !driveMode) {
             flipper.setPower(1);
-            gate.setPosition(0.25);
+            gate.setPosition(0.6);
         } else if (gamepad2.bWasReleased()){
             flipper.setPower(0);
         }

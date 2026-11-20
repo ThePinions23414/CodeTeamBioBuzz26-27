@@ -13,7 +13,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.teamcode.pedro.Constants;
+//import org.firstinspires.ftc.teamcode.pedro.Constants;
 @Disabled
 @Autonomous(name = "AutoPath", group = "Autonomous")
 public class PathingTest extends LinearOpMode {
@@ -42,7 +42,7 @@ public class PathingTest extends LinearOpMode {
     @Override
     public void runOpMode() {
         Scheduler.reset();
-        follower = Constants.create(hardwareMap);
+        //follower = Constants.create(hardwareMap);
         follower.setPose(start);
         follower.update();
 

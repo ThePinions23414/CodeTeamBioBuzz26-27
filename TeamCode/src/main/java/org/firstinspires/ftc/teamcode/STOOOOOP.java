@@ -7,7 +7,7 @@ import com.pedropathing.follower.ManualDrive;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.teamcode.pedro.Constants;
+//import org.firstinspires.ftc.teamcode.pedro.Constants;
 
 public class STOOOOOP {
 
@@ -16,7 +16,7 @@ public class STOOOOOP {
 
     public void init(HardwareMap hardwareMap) {
 
-        this.follower = Constants.create(hardwareMap);
+        //this.follower = Constants.create(hardwareMap);
 
 
     }

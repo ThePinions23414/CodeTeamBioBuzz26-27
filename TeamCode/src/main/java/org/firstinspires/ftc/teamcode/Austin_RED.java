@@ -16,7 +16,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 
 import java.util.List;
 
-
+@Disabled
 @TeleOp
 public class Austin_RED extends OpMode{
     DriveTrain driveTrain = new DriveTrain();
@@ -54,7 +54,7 @@ public class Austin_RED extends OpMode{
         flipper = hardwareMap.get(CRServo.class,"flipper");
         rightsideintake = hardwareMap.get(CRServo.class,"rightsideintake");
         leftIntake = hardwareMap.get(CRServo.class,"leftIntake");
-        the_wedge = hardwareMap.get(Servo.class,"the_wedge");
+        the_wedge = hardwareMap.get(Servo.class,"wedge");
         gate = hardwareMap.get(Servo.class, "gate");
 
         velocity = 1350;

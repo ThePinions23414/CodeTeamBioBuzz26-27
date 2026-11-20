@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.util.Range;
 
 public class testHiveTargetingMechanism {
 
-    private double kP = 0.03700;
+    private double kP = 0.03800;
     private double kD = 0.00008;
     private double hiveX = 0;
 
@@ -14,7 +14,7 @@ public class testHiveTargetingMechanism {
     private boolean hasLastError = false;
     private boolean onTarget = false;
 
-    private double angleTolerance = 0.5;
+    private double angleTolerance = 2;
     private final double MAX_POWER = 1.0;
     private final double MIN_POWER = 0.09; // Minimum power to overcome static friction
 

@@ -55,7 +55,7 @@ public class Demo extends OpMode{
         flipper = hardwareMap.get(CRServo.class,"flipper");
         rightsideintake = hardwareMap.get(CRServo.class,"rightsideintake");
         leftIntake = hardwareMap.get(CRServo.class,"leftIntake");
-        the_wedge = hardwareMap.get(Servo.class,"the_wedge");
+        the_wedge = hardwareMap.get(Servo.class,"wedge");
         gate = hardwareMap.get(Servo.class, "gate");
 
         velocity = 1350;
